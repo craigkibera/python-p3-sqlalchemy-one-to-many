@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from conftest import SQLITE_URL
-from models import Game, Review
+from models import Base, Game, Review  # Import Base
 
 class TestReview:
     '''Class Review in models.py'''
@@ -12,11 +12,14 @@ class TestReview:
     Session = sessionmaker(bind=engine)
     session = Session()
 
+    # Create tables
+    Base.metadata.create_all(engine)
+
     # add test data
     skyrim = Game(
         title="The Elder Scrolls V: Skyrim",
-        platform="PC",
         genre="Adventure",
+        platform="PC",
         price=20
     )
 
